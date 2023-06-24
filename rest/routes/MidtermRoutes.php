@@ -18,6 +18,8 @@ Flight::route('GET /cap-table', function(){
     * Outpus is given in figure 2
     * This endpoint should return output in JSON format
     */
+    Flight::json(Flight::midtermService()->cap_table());
+    //ovi ovdje nazivi se odnose na nazive koji su u services
 });
 
 Flight::route('GET /summary', function(){
@@ -26,6 +28,7 @@ Flight::route('GET /summary', function(){
     * Output is given in figure 3
     * This endpoint should return output in JSON format
     */
+    Flight::json(Flight::midtermService()->summary());
 });
 
 Flight::route('GET /investors', function(){
@@ -34,6 +37,7 @@ Flight::route('GET /investors', function(){
     * Output is given in figure 4
     * This endpoint should return output in JSON format
     */
+    Flight::json(Flight::midtermService()->investors());
 });
 
 ?>

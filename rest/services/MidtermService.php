@@ -12,13 +12,59 @@ class MidtermService {
     * Implement service method to return detailed cap-table
     */
     public function cap_table(){
+        $initialData =  $this->dao->cap_table(); //potrebno je prvo da fetchamo sve pa cemo tek onda preuredivati kako nam odgovara i treba
+        $result = array();
+        
 
+        foreach($initialData as $row){
+            $share_class_id = $row['share_class_id'];
+            $share_class_category_id = $row['share_class_category_id'];
+            $investor_id = $row['investor_id'];
+            //idu ova tri elementa jer imamo tri dijela class, category i investor
+            //znaci u ove tri varijable lijevo se spasavaju ovi podaci desno sto su iz cap table
+            
+            $share_class=$this->dao->getShareClass($share_class_id);
+            $share_class_category=$this->dao->getShareClassCategory($share_class_category_id);
+            $investor = $this->dao->getInvestor($investor_id);
+           //da bismo izvukli po dio od svacega, tj. ono description potrebne su nam ove dodatne metode
+
+            
+            //ovako se formira array
+            $result[$share_class_id]['class'] = $share_class['description'];
+             
+            $result[$share_class_id]['categories'][$share_class_category_id]['category'] = $share_class_category['description'];
+            
+            
+            $result[$share_class_id]['categories'][$share_class_category_id]['investors'][$investor_id]['investor'] = 
+            $investor['first_name'] . " " . $investor['last_name'];
+            
+            
+            $result[$share_class_id]['categories'][$share_class_category_id]['investors'][$investor_id]['diluted_shares'] = 
+            $row['diluted_shares'];  //ovo direktno izvlaci iz foreach gore
+            
+    
+            //$result['investors'] = $investor['first_name'];
+
+        } 
+        
+        $result = array_values($result); //da brojanje pocne od 0 za klase
+
+        foreach($result as &$class){ //ovaj ampersand je to access by reference
+            $class['categories'] = array_values($class['categories']);
+            foreach($class['categories'] as &$category){
+                $category['investors'] = array_values($category['investors']);
+
+            }
+        }
+        return $result;
+      
     }
 
     /** TODO
     * Implement service method to return cap-table summary
     */
     public function summary(){
+        return $this->dao->summary();
 
     }
 
@@ -26,6 +72,7 @@ class MidtermService {
     * Implement service method to return list of investors with their total shares amount
     */
     public function investors(){
+        return $this->dao->investors();
 
     }
 }
