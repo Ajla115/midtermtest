@@ -43,7 +43,7 @@ class MidtermService {
             $row['diluted_shares'];  //ovo direktno izvlaci iz foreach gore
             
     
-            //$result['investors'] = $investor['first_name'];
+            
 
         } 
         
@@ -56,8 +56,8 @@ class MidtermService {
 
             }
         }
-        return $result;
-      
+        
+      return $result;
     }
 
     /** TODO
