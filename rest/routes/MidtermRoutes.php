@@ -7,6 +7,8 @@ Flight::route('GET /connection-check', function(){
     * This endpoint does not have to return output in JSON format
     */
     FLIGHT::midtermService();
+    //$midtermDao = new MidtermDao();
+    //ovo je drugi nacin
 });
 
 Flight::route('GET /cap-table', function(){
